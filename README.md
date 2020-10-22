@@ -8,13 +8,13 @@ done.
 
 To overcome this, we can make use of the
 [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas)
-interface, and run the drawing method in a web-worker thread that will not
-block the main thread while it is calculating! Not bad.
+interface, and run the drawing method in a web-worker thread that will never
+block the main thread. Even while it is calculating!
 
 ## Installation
 
 ```bash
-yarn add react-hooks-use-offscreen-drawing-context
+yarn add react-hooks-use-offscreen-drawing-canvas
 ```
 
 <!-- TODO: ## Usage -->
