@@ -41,16 +41,6 @@ export function useOffscreenDrawingCanvas(
     return wrap<ExposedOffscreenDrawingMethod>(new Worker())
   }, [initWorkerModule])
 
-  // Then we need to send the canvas to the worker thread.
-  useEffect(() => {
-    const sendCanvas = async () => {
-      const offscreen = canvasRef.current.transferControlToOffscreen()
-      await (await proxy).setCanvas(transfer(offscreen, [offscreen]))
-      setSentCanvas(true)
-    }
-    sendCanvas()
-  }, [proxy, sentCanvas])
-
   useEffect(() => {
     proxy.then((exposed) =>
       exposed.setProps({
@@ -62,6 +52,16 @@ export function useOffscreenDrawingCanvas(
       })
     )
   }, [proxy, height, width])
+
+  // Then we need to send the canvas to the worker thread.
+  useEffect(() => {
+    const sendCanvas = async () => {
+      const offscreen = canvasRef.current.transferControlToOffscreen()
+      await (await proxy).setCanvas(transfer(offscreen, [offscreen]))
+      setSentCanvas(true)
+    }
+    if (!sentCanvas) sendCanvas()
+  }, [proxy, sentCanvas])
 
   return canvasRef
 }
