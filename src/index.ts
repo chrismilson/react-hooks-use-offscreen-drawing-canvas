@@ -88,6 +88,10 @@ class ExposedOffscreenDrawingMethod {
 
   private startDrawing() {
     if (!this.ctx) return
+
+    this.ctx.canvas.width = this.props.width
+    this.ctx.canvas.height = this.props.height
+
     this.cleanup = this.draw(this.ctx, this.props)
   }
 
